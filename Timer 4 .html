@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minuteur interactif</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Voulez-vous jouer ?</h1>
+
+    <form id="questionForm">
+        <input type="radio" id="yes" name="play" value="yes">
+        <label for="yes">Oui</label><br>
+        <input type="radio" id="no" name="play" value="no">
+        <label for="no">Non</label><br><br>
+    </form>
+
+    <div id="timer">30</div>
+
+    <script>
+        let timeLeft = 30;
+        let countdown;
+        const timerElement = document.getElementById("timer");
+        const formElement = document.getElementById("questionForm");
+
+        // Démarrer le minuteur dès le chargement de la page
+        countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+
+            // Vérifier si le temps est écoulé
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "Temps écoulé !";
+                setTimeout(() => {
+                    window.close(); // Ferme la page après 1 seconde
+                }, 1000);
+            }
+        }, 1000);
+
+        // Fonction pour gérer la réponse
+        formElement.addEventListener('change', (event) => {
+            const answer = document.querySelector('input[name="play"]:checked').value;
+
+            if (answer === "yes") {
+                clearInterval(countdown); // Arrêter le minuteur si "Oui" est sélectionné
+                alert("Le minuteur s'est arrêté. Vous allez être redirigé.");
+                // Redirection vers le lien spécifié
+                window.location.href = "https://www.notion.so/Solo-leveling-10859eb53db080a4b80af13aafff2064?pvs=4";
+            } else if (answer === "no") {
+                clearInterval(countdown); // Arrêter le minuteur si "Non" est sélectionné
+                alert("Vous avez choisi de ne pas jouer. La page va se fermer.");
+                setTimeout(() => {
+                    window.close(); // Ferme la page après 1 seconde
+                }, 1000);
+            }
+        });
+    </script>
+
+</body>
+</html>
